@@ -17,18 +17,21 @@ public class AdminService {
 
    Accounts accounts;
 
-   
-
-   public AdminService(Accounts accounts){
-    this.accounts = accounts;
+   public AdminService(Accounts accounts) {
+      this.accounts = accounts;
    }
 
-//    public Employee findAllEmployees(){
-
-//    }
-
    public List<Employee> findAllEmployees() {
-        return accounts.findAllEmployees();
-    }
-    
+      return accounts.findAllEmployees();
+   }
+
+   public List<Employee> findEmployeesByDepartment(String department) {
+      return accounts.findEmployeesByDepartment(department);
+   }
+
+   // findDepartement
+   public List<Employee> findDepartment() {
+      return accounts.findDepartment();
+   }
+
 }

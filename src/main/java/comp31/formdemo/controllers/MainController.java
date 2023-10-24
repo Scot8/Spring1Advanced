@@ -38,9 +38,8 @@ public class MainController {
     public String getForm(Employee employee, Model model) {
         logger.info("---- At /login.");
         logger.info("---- " + employee.toString());
-        Employee currentUser = loginService.findByUserId(employee.getUserId(), employee.getPassword());
-        String returnPage = loginService.userValidation(employee, currentUser, model);
-        model.addAttribute("employee", currentUser.getUserId());
+        //userAuth - auth with password and id
+        String returnPage = loginService.userValidation(employee, model);
         return returnPage;
     }
 
@@ -56,25 +55,48 @@ public class MainController {
         loginService.addEmployee(newPerson);
         model.addAttribute("employee", new Employee());
         return "redirect:/add-employee";
-        //Previous //return "login-form";
-        
     }
 
     @GetMapping("/all")
     public String getAllEmployees(Employee employee, Model model) {
-        //model.addAttribute("employee", new Employee());
+        //heading
+        String heading = "All-Employees";
+        model.addAttribute("heading", heading);
         String loggedUser = loginService.findCurrect();
-        //logger.info("damn" + loggedUser.toString());
-        //String cool = loggedUser.get(0).toString();
-        //Employee currentUser = loginService.findByUserId(employee.getUserId(), employee.getPassword());
         logger.info("black" + employee.toString());
+        //current user
         model.addAttribute("employee", loggedUser);
-        //logger.info(newPerson.toString());
         List<Employee> hello = adminService.findAllEmployees();
         logger.info(hello.toString());
         model.addAttribute("emp", hello);
         return "admin";
     }
 
+    @GetMapping("/employeeDepartment")
+    public String getEmployeeDep(Model model, Employee emp) {
+
+        String loggedUser = loginService.findCurrect();
+        model.addAttribute("employee", loggedUser);
+        model.addAttribute("employee", loggedUser);
+        model.addAttribute("emp", emp);
+        return "admin";
+    }
+
+    @PostMapping("/employeeDepartment")
+    public String postEmployeeDep(Model model, Employee emp) {
+        //returns employee by department
+        List<Employee> empD = adminService.findEmployeesByDepartment(emp.getRole());
+        logger.info(empD.toString());
+
+        //current user
+        String loggedUser = loginService.findCurrect();
+        model.addAttribute("employee", loggedUser);
+
+        model.addAttribute("emp", empD);
+        //setting up heading
+        model.addAttribute("heading", emp.getRole());
+        return "admin";
+
+    }
 
 }

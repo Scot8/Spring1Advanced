@@ -52,43 +52,39 @@ public class LoginService {
         return accounts.findByUserId(userId, password);
     }
 
-    public String userValidation(Employee employee, Employee currentUser, Model model){
+    public String userValidation(Employee employee, Model model) {
         String returnPage = "login-form";
 
+        Employee currentUser = findByUserId(employee.getUserId(), employee.getPassword());
+
         if (currentUser == null) {
-           // model.addAttribute("employee", employee);
+            // model.addAttribute("employee", employee);
             returnPage = "login-form";
         } else {
             addCurrectC(currentUser.getUserId());
-            if(currentUser.getRole().equals("sales")){
+            if (currentUser.getRole().equals("sales")) {
 
                 returnPage = "sales";
-            }
-            else if(currentUser.getRole().equals("orders")){
+            } else if (currentUser.getRole().equals("orders")) {
 
                 returnPage = "orders";
-            }
-            else if(currentUser.getRole().equals("repairs")){
+            } else if (currentUser.getRole().equals("repairs")) {
 
                 returnPage = "repairs";
-            }
-            else if(currentUser.getRole().equals("admin")){
-;
-                returnPage = "admin";
+            } else if (currentUser.getRole().equals("admin")) {
+                model.addAttribute("employee", currentUser.getUserId());
+                returnPage = "redirect:/all";
             }
         }
         return returnPage;
     }
 
-    public void addCurrectC(String name){
+    public void addCurrectC(String name) {
         userC.add(0, name);
     }
 
-    public String findCurrect(){
+    public String findCurrect() {
         return userC.get(0).toString();
     }
-
-
-
 
 }
