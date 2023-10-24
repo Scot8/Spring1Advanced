@@ -7,7 +7,18 @@
 </head>
 <body>
 
-    <h1>Hello</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Employees</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="employee : ${emp}">
+                <td th:text="${employee}"></td>
+            </tr>
+        </tbody>
+    </table>
     
 </body>
 </html>

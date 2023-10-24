@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h1>Welcome <span th:text="${employee.userId}"></span>, to the Admin Page</h1>
+    <h1>Welcome <span th:text="${employee}"></span>, to the Admin Page</h1>
 
     <h2>Register</h2>
     <form action="/add-employee" method="post" th:object="${employee}">
@@ -19,8 +19,29 @@
         <br>
         <label>Role</label>
         <input type="text" name="role" >
-
+        <br><br>
         <button>Register</button>
+    </form>
+    <br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Employees</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="employee : ${emp}">
+                <td th:text="${employee.userId}"></td>
+                <td th:text="${employee.role}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="/all" method="get">
+
+    <button>Register</button>
     </form>
     
 </body>
